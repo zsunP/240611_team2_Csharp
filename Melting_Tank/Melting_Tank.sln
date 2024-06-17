@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melting_Tank", "Melting_Tank\Melting_Tank.csproj", "{A83679EA-353E-4274-A812-2850E4A6A302}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQL_Melt", "MSSQL_Melt\MSSQL_Melt.csproj", "{65691D2A-028A-408C-90CE-7FA3AE19A7C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A83679EA-353E-4274-A812-2850E4A6A302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83679EA-353E-4274-A812-2850E4A6A302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83679EA-353E-4274-A812-2850E4A6A302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83679EA-353E-4274-A812-2850E4A6A302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65691D2A-028A-408C-90CE-7FA3AE19A7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65691D2A-028A-408C-90CE-7FA3AE19A7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65691D2A-028A-408C-90CE-7FA3AE19A7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65691D2A-028A-408C-90CE-7FA3AE19A7C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4EA001CF-8C42-44C1-B862-FEB214D5A487}
+	EndGlobalSection
+EndGlobal
