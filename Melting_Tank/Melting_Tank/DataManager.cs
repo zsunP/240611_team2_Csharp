@@ -68,7 +68,7 @@ namespace Melting_Tank
 
                         /*for (int i = 0; i < dataGridView.Main Rows.Count; i++)
                             {
-                            dataGridView1.Rows[i].Cells["번호"].Value = i + 1;
+                            dataGridView.Main.Rows[i].Cells["NUM"].Value = i + 1;
                             }*/
 
 

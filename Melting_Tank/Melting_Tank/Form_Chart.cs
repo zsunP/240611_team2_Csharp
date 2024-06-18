@@ -14,69 +14,14 @@ namespace Melting_Tank
 {
     public partial class Form_Chart : Form
     {
+        private Random random = new Random();
+        private double minTemperature = 30.0;
+        private double maxTemperature = 38.0;
         public Form_Chart()
         {
             InitializeComponent();
-            chart_no1.Location = new Point(12, 232);
-            chart_no1.Size = new Size(760, 360);
-
-
-            Random random = new Random();
-            double[] lineData = new double[220];
-            double[] barData = new double[45]; // 랜덤한 위치에서 막대그래프 데이터 생성
-            for (int i = 0; i < lineData.Length; i++)
-            {
-                lineData[i] = random.NextDouble() * 100; // 0부터 100 사이의 랜덤 값 생성
-            }
-            for (int i = 0; i < barData.Length; i++)
-            {
-                barData[i] = random.NextDouble() * 100; // 0부터 100 사이의 랜덤 값 생성
-            }
-
-            // 기존 차트 컨트롤에 라인 그래프 추가
-            Series lineSeries = new Series();
-            lineSeries.ChartType = SeriesChartType.Line; // 라인 그래프로 설정
-            lineSeries.Color = Color.Blue; // 라인 그래프 색상 설정
-            lineSeries.BorderWidth = 2; // 라인 그래프 두께 설정
-            chart_no1.Series.Add(lineSeries); // 기존 차트 컨트롤에 라인 시리즈 추가
-
-            // 라인 그래프 데이터 포인트 추가
-            for (int i = 0; i < lineData.Length; i++)
-            {
-                lineSeries.Points.AddXY(i, lineData[i]);
-            }
-
-            // 기존 차트 컨트롤에 막대 그래프 추가
-            Series barSeries = new Series();
-            barSeries.ChartType = SeriesChartType.Column; // 막대 그래프로 설정
-            barSeries.Color = Color.Red; // 막대 그래프 색상 설정
-            barSeries.BorderWidth = 2; // 막대 그래프 두께 설정
-            chart_no1.Series.Add(barSeries); // 기존 차트 컨트롤에 막대 시리즈 추가
-
-            // 막대 그래프 데이터 포인트 추가
-            for (int i = 0; i < barData.Length; i++)
-            {
-                barSeries.Points.AddXY(random.Next(lineData.Length), barData[i]); // 랜덤 위치에 막대 그래프 추가
-            }
-
-            // 차트 영역 설정
-            ChartArea chartArea = new ChartArea();
-           
-            chart_no1.ChartAreas.Add(chartArea);
-            chart_no1.ChartAreas[0].AxisX.Minimum = 0;
-            chart_no1.ChartAreas[0].AxisX.Maximum = lineData.Length - 1; // X 축 범위 설정
-            chart_no1.ChartAreas[0].AxisY.Minimum = 0;
-            chart_no1.ChartAreas[0].AxisY.Maximum = 100; // Y 축 범위 설정
 
            
-
-            // 축 라벨 설정
-            chart_no1.ChartAreas[0].AxisX.Title = "Index";
-            chart_no1.ChartAreas[0].AxisY.Title = "Value";
-
-            // 그래프 갱신
-            chart_no1.Dock = DockStyle.Fill;
-            chart_no1.DataBind();
 
             //원그래프생성
             int goodCount = 415;
@@ -113,10 +58,80 @@ namespace Melting_Tank
 
 
         }
+        private void FormChart_Load(object sender, EventArgs e)
+        {
+            // 차트 초기화
+            InitializeChart();
+        }
+
+        private void InitializeChart()
+        {
+            // 차트 설정
+            chart_no1.ChartAreas.Clear();
+            ChartArea chartArea = new ChartArea("MainArea");
+            chart_no1.ChartAreas.Add(chartArea);
+
+            // 온도 라인 차트 설정
+            Series temperatureSeries = new Series("Temperature");
+            temperatureSeries.ChartType = SeriesChartType.Line;
+            temperatureSeries.ChartArea = "MainArea";
+            chart_no1.Series.Add(temperatureSeries);
+
+            // 실패 여부 산점도 설정
+            Series failureSeries = new Series("Failure");
+            failureSeries.ChartType = SeriesChartType.Point;
+            failureSeries.ChartArea = "MainArea";
+            chart_no1.Series.Add(failureSeries);
+            failureSeries.Color = Color.Red;
+
+
+            // 데이터 생성 및 추가
+
+            // 전체 데이터 포인트 수 설정 (예시에서는 총 1000개)
+            int totalPoints = 15000;
+
+            // 온도 범위 설정 (30도부터 39도까지)
+            double temperatureStart = 300.0;
+            double temperatureEnd = 800.0;
+
+            for (double temperature = temperatureStart; temperature <= temperatureEnd; temperature++)
+            {
+                // 랜덤하게 표본 수 설정 (1에서 1500 사이)
+                int sampleCount = random.Next(1, (totalPoints / 8) + 1);
+
+                // 랜덤하게 실패 횟수 설정
+                int failureCount = (int)(sampleCount * 0.2); // 실패 확률이 20%라고 가정
+
+                // 온도 라인 차트에 데이터 추가
+                temperatureSeries.Points.AddXY(temperature, sampleCount);
+
+                // 실패일 경우 산점도에 데이터 추가
+                DataPoint dataPoint = new DataPoint();
+                dataPoint.SetValueXY(temperature, sampleCount); // X축: 온도, Y축: 표본 수
+                dataPoint.MarkerSize = failureCount/20; // 버블 크기 설정
+                failureSeries.Points.Add(dataPoint);
+            }
+
+
+            //failureSeries.MarkerSize = 10;
+            failureSeries.MarkerStyle = MarkerStyle.Circle;
+            // 차트 축 설정
+            chartArea.AxisX.Title = "Temperature";
+            chartArea.AxisY.Title = "Data Point";
+            chartArea.AxisY.Minimum = 1; // Y 축 최소값 설정
+            chartArea.AxisY.Maximum = 2500; // Y 축 최대값 설정
 
 
 
-        private void timer1_Tick(object sender, EventArgs e)
+
+        }
+
+    
+
+    
+
+
+    private void timer1_Tick(object sender, EventArgs e)
         {
             label_Time.Text = DateTime.Now.ToString();
         }
@@ -124,6 +139,12 @@ namespace Melting_Tank
         private void button_Temp_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button_Min_Click(object sender, EventArgs e)
+        {
+            chart_no1.Series.Clear();
+            InitializeChart();
         }
     }
 }

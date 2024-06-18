@@ -99,13 +99,13 @@
             this.chart_no1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart_no1.Legends.Add(legend1);
-            this.chart_no1.Location = new System.Drawing.Point(12, 12);
+            this.chart_no1.Location = new System.Drawing.Point(73, 68);
             this.chart_no1.Name = "chart_no1";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart_no1.Series.Add(series1);
-            this.chart_no1.Size = new System.Drawing.Size(867, 524);
+            this.chart_no1.Size = new System.Drawing.Size(1116, 524);
             this.chart_no1.TabIndex = 4;
             this.chart_no1.Text = "chart1";
             // 
@@ -201,6 +201,7 @@
             this.button_Min.TabIndex = 12;
             this.button_Min.Text = "최소값표시";
             this.button_Min.UseVisualStyleBackColor = true;
+            this.button_Min.Click += new System.EventHandler(this.button_Min_Click);
             // 
             // label_analys_over
             // 
@@ -248,13 +249,13 @@
             this.chart_PassFail.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chart_PassFail.Legends.Add(legend2);
-            this.chart_PassFail.Location = new System.Drawing.Point(80, 394);
+            this.chart_PassFail.Location = new System.Drawing.Point(15, 585);
             this.chart_PassFail.Name = "chart_PassFail";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart_PassFail.Series.Add(series2);
-            this.chart_PassFail.Size = new System.Drawing.Size(628, 420);
+            this.chart_PassFail.Size = new System.Drawing.Size(296, 249);
             this.chart_PassFail.TabIndex = 18;
             this.chart_PassFail.Text = "chart1";
             // 

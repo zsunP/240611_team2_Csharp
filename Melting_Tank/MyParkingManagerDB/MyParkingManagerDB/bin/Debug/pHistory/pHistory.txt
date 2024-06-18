@@ -1,0 +1,75 @@
+[2024-06-10 16:15:23.496]주차 공간 2에 30고1234 차 출차
+[2024-06-10 16:16:46.804]update   위치: System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   위치: System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   위치: System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   위치: System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   위치: System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   위치: System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   위치: System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   위치: System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   위치: System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   위치: MyParkingManagerDB.DBHelper.updateQuery(String pst, String cnum, String dname, String pnum, Boolean isRemove) 파일 D:\sharework\djlee\djCSharp2\MyParkingManagerDB\MyParkingManagerDB\DBHelper.cs:줄 96
+[2024-06-10 16:16:46.805]주차 공간 1에 42너1231차를 주차했습니다.
+[2024-06-10 16:18:51.174]주차 공간 1에 42너1231차를 주차했습니다.
+[2024-06-11 09:26:49.511]주차 공간 2에 30고1111차를 주차했습니다.
+[2024-06-11 09:28:37.677]주차 공간 1에 42너1231 차 출차
+[2024-06-11 09:29:01.934]주차 공간 2에 30고1111 차 출차
+[2024-06-11 09:29:05.372]주차 공간 2에 30고1111차를 주차했습니다.
+[2024-06-11 09:55:29.394]해당 공간이 이미 존재하여서 추가할 수 없습니다.
+[2024-06-11 09:55:34.994]주차 공간 1 삭제됨
+[2024-06-11 09:55:38.538]해당 공간은 아직 없습니다.
+[2024-06-11 09:55:59.302]주차 공간 4 추가됨
+[2024-06-11 09:56:11.743]주차 공간 1 추가됨
+[2024-06-11 10:22:47.668]주차공간 1에 주차된 차는 없습니다!
+[2024-06-11 10:22:50.268]주차공간 2에 주차된 차는 30고1111!
+[2024-06-11 10:22:53.508]주차공간 5에 주차된 차는 없습니다!
+[2024-06-11 10:23:01.336]주차 공간 5 추가됨
+[2024-06-11 10:23:02.562]주차공간 5에 주차된 차는 없습니다!
+[2024-06-11 10:23:07.748]주차 공간 5 삭제됨
+[2024-06-11 10:23:09.935]주차 공간 5 추가됨
+[2024-06-11 10:23:15.294]주차 공간 6 추가됨
+[2024-06-11 10:23:24.073]주차 공간 5 삭제됨
+[2024-06-17 10:25:56.671]select   위치: System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   위치: System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   위치: System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   위치: System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   위치: System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   위치: System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   위치: System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   위치: System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   위치: System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   위치: System.Data.SqlClient.SqlConnection.Open()
+   위치: MyParkingManagerDB.DBHelper.connectDB() 파일 \\192.168.0.135\sharework\djlee\djCSharp2\MyParkingManagerDB\MyParkingManagerDB\DBHelper.cs:줄 31
+   위치: MyParkingManagerDB.DBHelper.selectQuery(Int32 ps) 파일 \\192.168.0.135\sharework\djlee\djCSharp2\MyParkingManagerDB\MyParkingManagerDB\DBHelper.cs:줄 41
+[2024-06-17 10:25:58.208]주차공간 에 주차된 차는 없습니다!
+[2024-06-17 10:26:00.374]주차 공간 번호는 0 이상의 숫자여야 합니다.
+[2024-06-17 10:26:03.142]주차 공간 번호는 0 이상의 숫자여야 합니다.
+[2024-06-17 10:26:05.538]select   위치: System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   위치: System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   위치: System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   위치: System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   위치: System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   위치: System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   위치: System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   위치: System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   위치: System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   위치: System.Data.SqlClient.SqlConnection.Open()
+   위치: MyParkingManagerDB.DBHelper.connectDB() 파일 \\192.168.0.135\sharework\djlee\djCSharp2\MyParkingManagerDB\MyParkingManagerDB\DBHelper.cs:줄 31
+   위치: MyParkingManagerDB.DBHelper.selectQuery(Int32 ps) 파일 \\192.168.0.135\sharework\djlee\djCSharp2\MyParkingManagerDB\MyParkingManagerDB\DBHelper.cs:줄 41
+[2024-06-17 10:26:06.630]select   위치: System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   위치: System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   위치: System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   위치: System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   위치: System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   위치: System.Data.SqlClient.SqlConnection.Open()
+   위치: MyParkingManagerDB.DBHelper.connectDB() 파일 \\192.168.0.135\sharework\djlee\djCSharp2\MyParkingManagerDB\MyParkingManagerDB\DBHelper.cs:줄 31
+   위치: MyParkingManagerDB.DBHelper.selectQuery(Int32 ps) 파일 \\192.168.0.135\sharework\djlee\djCSharp2\MyParkingManagerDB\MyParkingManagerDB\DBHelper.cs:줄 41
+[2024-06-17 10:26:09.143]주차 공간 번호는 0 이상의 숫자여야 합니다.
