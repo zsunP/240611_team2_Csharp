@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -14,7 +15,7 @@ namespace test1
         }
 
         // 차트 업데이트 메서드
-        public void UpdateTempOneChart(List<Data> filteredRecords)
+        public void UpdatePassFailChart(List<Data> filteredRecords)
         {
             if (filteredRecords == null || filteredRecords.Count == 0)
             {
@@ -59,7 +60,7 @@ namespace test1
             chart_OKNG.Titles.Add($"기간에 따른 양품과 불량품 비율");
         }
 
-        public void UpdateTempTwoChart(List<Data> filteredRecords)
+        public void UpdatePassFailbyDayChart(List<Data> filteredRecords)
         {
             if (filteredRecords == null || filteredRecords.Count == 0)
             {
@@ -259,32 +260,21 @@ namespace test1
                 return;
             }
 
-            // MELT_TEMP 온도 별 통계를 저장할 Dictionary
-            Dictionary<DateTime, MeltTempStats> dateStats = new Dictionary<DateTime, MeltTempStats>();
+            // 양품(OK)과 불량(NG)의 온도를 저장할 리스트 초기화
+            List<double> tempOK = new List<double>();
+            List<double> tempNG = new List<double>();
 
-            // 데이터를 날짜 별로 그룹화하고 통계값 계산
-            var groupedByDate = filteredRecords.GroupBy(record => record.STD_DT.Date);
-
-            foreach (var group in groupedByDate)
+            // 데이터를 루프를 돌면서 OK와 NG를 구분하여 리스트에 추가
+            foreach (var record in filteredRecords)
             {
-                DateTime date = group.Key;
-
-                // 최대값 계산
-                double maxTemp = group.Max(record => record.MELT_TEMP);
-
-                // 최소값 계산
-                double minTemp = group.Min(record => record.MELT_TEMP);
-
-                // 최빈값 계산
-                double modeTemp = CalculateModeTemp(group.Select(record => record.MELT_TEMP).ToList());
-
-                // 날짜 별 통계 저장
-                dateStats[date] = new MeltTempStats
+                if (record.TAG == "OK")
                 {
-                    MaxTemp = maxTemp,
-                    MinTemp = minTemp,
-                    ModeTemp = modeTemp
-                };
+                    tempOK.Add(record.MELT_TEMP);
+                }
+                else if (record.TAG == "NG")
+                {
+                    tempNG.Add(record.MELT_TEMP);
+                }
             }
 
             // 차트 초기화
@@ -294,78 +284,50 @@ namespace test1
             chart_Temp.ChartAreas.Add(chartArea);
 
             // 시리즈 생성 및 설정
-            Series seriesMax = new Series("최대값");
-            Series seriesMin = new Series("최소값");
-            Series seriesMode = new Series("최빈값");
+            Series seriesOK = new Series("양품(OK) 온도 분포");
+            Series seriesNG = new Series("불량(NG) 온도 분포");
 
-            seriesMax.ChartType = SeriesChartType.Column;
-            seriesMin.ChartType = SeriesChartType.Column;
-            seriesMode.ChartType = SeriesChartType.Column;
+            seriesOK.ChartType = SeriesChartType.FastLine; // 양품은 라인 차트로 표시
+            seriesNG.ChartType = SeriesChartType.FastLine; // 불량은 라인 차트로 표시
 
             // 각 시리즈에 데이터 추가
-            foreach (var dateStat in dateStats)
+            foreach (var temp in tempOK)
             {
-                DateTime date = dateStat.Key;
-                MeltTempStats stats = dateStat.Value;
-
-                // 같은 날짜에 대해 서로 다른 시리즈에 값 추가
-                seriesMax.Points.AddXY(date.ToShortDateString(), stats.MaxTemp);
-                seriesMin.Points.AddXY(date.ToShortDateString(), stats.MinTemp);
-                seriesMode.Points.AddXY(date.ToShortDateString(), stats.ModeTemp);
+                seriesOK.Points.AddY(temp);
             }
 
+            foreach (var temp in tempNG)
+            {
+                seriesNG.Points.AddY(temp);
+            }
+
+            // 불량(NG) 시리즈의 선 색상을 빨간색으로 설정
+            seriesNG.Color = Color.Red;
+
             // 시리즈 추가
-            chart_Temp.Series.Add(seriesMax);
-            chart_Temp.Series.Add(seriesMin);
-            chart_Temp.Series.Add(seriesMode);
+            chart_Temp.Series.Add(seriesOK);
+            chart_Temp.Series.Add(seriesNG);
 
             // 축 설정
             chart_Temp.ChartAreas[0].AxisX.Interval = 1;
-            chart_Temp.ChartAreas[0].AxisX.LabelStyle.Angle = -45; // X축 라벨 각도 설정
+            chart_Temp.ChartAreas[0].AxisY.Minimum = 0; // Y축 최소값 설정
+            chart_Temp.ChartAreas[0].AxisY.Maximum = 800; // Y축 최대값 설정
 
             // 제목 설정
             chart_Temp.Titles.Clear();
-            chart_Temp.Titles.Add("날짜 별 용융 온도 통계");
+            chart_Temp.Titles.Add("양품과 불량의 온도 분포 비교");
+
+            // 범례 설정
+            chart_Temp.Legends.Clear();
+            chart_Temp.Legends.Add(new Legend("Legend"));
+            chart_Temp.Series["양품(OK) 온도 분포"].Legend = "Legend";
+            chart_Temp.Series["불량(NG) 온도 분포"].Legend = "Legend";
 
             // 차트 보여주기
             chart_Temp.Visible = true;
         }
 
-        // 최빈값 계산 함수
-        private double CalculateModeTemp(List<int> values)
-        {
-            // 빈도를 저장할 Dictionary
-            Dictionary<double, int> frequencyMap = new Dictionary<double, int>();
-
-            // 빈도 맵 생성
-            foreach (double value in values)
-            {
-                if (frequencyMap.ContainsKey(value))
-                {
-                    frequencyMap[value]++;
-                }
-                else
-                {
-                    frequencyMap[value] = 1;
-                }
-            }
-
-            // 최빈값 찾기
-            double modeValue = double.MinValue;
-            int maxFrequency = 0;
-
-            foreach (var pair in frequencyMap)
-            {
-                if (pair.Value > maxFrequency)
-                {
-                    maxFrequency = pair.Value;
-                    modeValue = pair.Key;
-                }
-            }
-
-            return modeValue;
-        }
-
+        //수분량출력
         public void UpdateMoistureContentChart(List<Data> filteredRecords)
         {
             if (filteredRecords == null || filteredRecords.Count == 0)
@@ -498,6 +460,8 @@ namespace test1
 
             return modeValue;
         }
+
+        //무게계산
         public void UpdateMeltWeightChart(List<Data> filteredRecords)
         {
             if (filteredRecords == null || filteredRecords.Count == 0)

@@ -56,7 +56,7 @@
             this.button_Csv.TabIndex = 1;
             this.button_Csv.Text = "CSV Read";
             this.button_Csv.UseVisualStyleBackColor = true;
-            this.button_Csv.Click += new System.EventHandler(this.button1_Click);
+            this.button_Csv.Click += new System.EventHandler(this.button_Csv_Click);
             // 
             // button_DBinsert
             // 
@@ -66,7 +66,7 @@
             this.button_DBinsert.TabIndex = 2;
             this.button_DBinsert.Text = "DB Insert";
             this.button_DBinsert.UseVisualStyleBackColor = true;
-            this.button_DBinsert.Click += new System.EventHandler(this.button2_Click);
+            this.button_DBinsert.Click += new System.EventHandler(this.button_DBinsert_Click);
             // 
             // filterButton
             // 

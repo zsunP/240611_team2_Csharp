@@ -45,7 +45,7 @@ namespace test1
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_Csv_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -63,7 +63,7 @@ namespace test1
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button_DBinsert_Click(object sender, EventArgs e)
         {
             string connectionString = "Server=DESKTOP-MSVGK7N;Database=test;Integrated Security=True;";
             InsertDataIntoSqlServer(filteredRecords ?? records, connectionString);
@@ -130,19 +130,7 @@ namespace test1
             dataGridView_Main.DataSource = filteredRecords;
         }
 
-        private void Temp_Click_1(object sender, EventArgs e)
-        {
-            if (filteredRecords == null || filteredRecords.Count == 0)
-            {
-                MessageBox.Show("필터링된 데이터가 없습니다.");
-                return;
-            }
-
-            Chart form2 = new Chart();
-            form2.UpdateTempOneChart(filteredRecords);
-            form2.UpdateTempTwoChart(filteredRecords);
-            form2.ShowDialog();
-        }
+    
        
 
         private void button_ChartShow_Click(object sender, EventArgs e)
@@ -153,8 +141,8 @@ namespace test1
                 return;
             }
             Chart formChart = new Chart();
-            formChart.UpdateTempOneChart(filteredRecords);
-            formChart.UpdateTempTwoChart(filteredRecords);
+            formChart.UpdatePassFailChart(filteredRecords);
+            formChart.UpdatePassFailbyDayChart(filteredRecords);
             formChart.UpdateMotorSpeedChart(filteredRecords);
             formChart.UpdateMeltTempChart(filteredRecords);
             formChart.UpdateMeltWeightChart(filteredRecords);
