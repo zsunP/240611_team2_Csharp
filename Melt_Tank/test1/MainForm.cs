@@ -55,7 +55,7 @@ namespace test1
                 {
                     string filePath = openFileDialog.FileName;
                     records = ReadCsvFile(filePath);
-                    dataGridView1.DataSource = records;
+                    dataGridView_Main.DataSource = records;
 
                     // CSV 파일 로드 후 ComboBox 업데이트
                     InitializeDateComboBoxes();
@@ -127,7 +127,7 @@ namespace test1
 
             // 시작 날짜보다 크거나 같고, 종료 날짜보다 작거나 같은 데이터 필터링
             filteredRecords = records.Where(record => record.STD_DT.Date >= startDate && record.STD_DT.Date <= endDate).ToList();
-            dataGridView1.DataSource = filteredRecords;
+            dataGridView_Main.DataSource = filteredRecords;
         }
 
         private void Temp_Click_1(object sender, EventArgs e)
@@ -143,21 +143,25 @@ namespace test1
             form2.UpdateTempTwoChart(filteredRecords);
             form2.ShowDialog();
         }
-        private void Speed_Click(object sender, EventArgs e) //모터스피드
+       
+
+        private void button_ChartShow_Click(object sender, EventArgs e)
         {
             if (records == null || records.Count == 0)
             {
                 MessageBox.Show("CSV 파일을 먼저 로드하세요.");
                 return;
             }
-
-            Form3 form3 = new Form3();
-            form3.UpdateMotorSpeedChart(filteredRecords);
-            form3.ShowDialog();
+            Chart formChart = new Chart();
+            formChart.UpdateTempOneChart(filteredRecords);
+            formChart.UpdateTempTwoChart(filteredRecords);
+            formChart.UpdateMotorSpeedChart(filteredRecords);
+            formChart.UpdateMeltTempChart(filteredRecords);
+            formChart.UpdateMeltWeightChart(filteredRecords);
+            formChart.UpdateMoistureContentChart(filteredRecords);
+            formChart.ShowDialog();
         }
-
-  
-
-       
     }
-}
+
+    }
+

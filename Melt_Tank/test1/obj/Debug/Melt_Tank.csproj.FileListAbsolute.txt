@@ -1,7 +1,6 @@
 C:\Users\KB\Documents\Visual Studio C#\Melt_Tank\test1\obj\Debug\Melt_Tank.csproj.AssemblyReference.cache
 C:\Users\KB\Documents\Visual Studio C#\Melt_Tank\test1\obj\Debug\test1.MoterSpeed.resources
 C:\Users\KB\Documents\Visual Studio C#\Melt_Tank\test1\obj\Debug\test1.Chart.resources
-C:\Users\KB\Documents\Visual Studio C#\Melt_Tank\test1\obj\Debug\test1.Form3.resources
 C:\Users\KB\Documents\Visual Studio C#\Melt_Tank\test1\obj\Debug\test1.Properties.Resources.resources
 C:\Users\KB\Documents\Visual Studio C#\Melt_Tank\test1\obj\Debug\Melt_Tank.csproj.GenerateResource.cache
 C:\Users\KB\Documents\Visual Studio C#\Melt_Tank\test1\obj\Debug\Melt_Tank.csproj.CoreCompileInputs.cache

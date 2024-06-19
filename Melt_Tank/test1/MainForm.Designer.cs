@@ -28,24 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MoterSpeed));
+            this.dataGridView_Main = new System.Windows.Forms.DataGridView();
             this.button_Csv = new System.Windows.Forms.Button();
             this.button_DBinsert = new System.Windows.Forms.Button();
             this.filterButton = new System.Windows.Forms.Button();
             this.startDateComboBox = new System.Windows.Forms.ComboBox();
             this.endDateComboBox = new System.Windows.Forms.ComboBox();
             this.button_ChartShow = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Main)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dataGridView_Main
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(57, 62);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(764, 302);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Main.Location = new System.Drawing.Point(57, 62);
+            this.dataGridView_Main.Name = "dataGridView_Main";
+            this.dataGridView_Main.RowTemplate.Height = 23;
+            this.dataGridView_Main.Size = new System.Drawing.Size(764, 302);
+            this.dataGridView_Main.TabIndex = 0;
             // 
             // button_Csv
             // 
@@ -101,6 +102,7 @@
             this.button_ChartShow.TabIndex = 6;
             this.button_ChartShow.Text = "Chart출력";
             this.button_ChartShow.UseVisualStyleBackColor = true;
+            this.button_ChartShow.Click += new System.EventHandler(this.button_ChartShow_Click);
             // 
             // MoterSpeed
             // 
@@ -113,17 +115,18 @@
             this.Controls.Add(this.filterButton);
             this.Controls.Add(this.button_DBinsert);
             this.Controls.Add(this.button_Csv);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridView_Main);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MoterSpeed";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Text = "데이터입력및출력";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Main)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView_Main;
         private System.Windows.Forms.Button button_Csv;
         private System.Windows.Forms.Button button_DBinsert;
         private System.Windows.Forms.Button filterButton;
