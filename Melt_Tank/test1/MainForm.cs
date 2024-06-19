@@ -156,31 +156,7 @@ namespace test1
             form3.ShowDialog();
         }
 
-        private void Weight_Click(object sender, EventArgs e) //Weight
-        {
-            if (records == null || records.Count == 0)
-            {
-                MessageBox.Show("CSV 파일을 먼저 로드하세요.");
-                return;
-            }
-
-            Form4 form4 = new Form4();
-          
-            form4.ShowDialog();
-        }
-
-        private void Insp_Click(object sender, EventArgs e) //INSP
-        {
-            if (records == null || records.Count == 0)
-            {
-                MessageBox.Show("CSV 파일을 먼저 로드하세요.");
-                return;
-            }
-
-            Form5 form5 = new Form5();
-          
-            form5.ShowDialog();
-        }
+  
 
        
     }
