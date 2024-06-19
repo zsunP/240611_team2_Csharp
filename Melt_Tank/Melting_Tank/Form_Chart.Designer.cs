@@ -99,13 +99,13 @@
             this.chart_no1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart_no1.Legends.Add(legend1);
-            this.chart_no1.Location = new System.Drawing.Point(73, 68);
+            this.chart_no1.Location = new System.Drawing.Point(24, 30);
             this.chart_no1.Name = "chart_no1";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart_no1.Series.Add(series1);
-            this.chart_no1.Size = new System.Drawing.Size(1116, 524);
+            this.chart_no1.Size = new System.Drawing.Size(794, 429);
             this.chart_no1.TabIndex = 4;
             this.chart_no1.Text = "chart1";
             // 
@@ -249,13 +249,13 @@
             this.chart_PassFail.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chart_PassFail.Legends.Add(legend2);
-            this.chart_PassFail.Location = new System.Drawing.Point(15, 585);
+            this.chart_PassFail.Location = new System.Drawing.Point(870, 109);
             this.chart_PassFail.Name = "chart_PassFail";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart_PassFail.Series.Add(series2);
-            this.chart_PassFail.Size = new System.Drawing.Size(296, 249);
+            this.chart_PassFail.Size = new System.Drawing.Size(323, 289);
             this.chart_PassFail.TabIndex = 18;
             this.chart_PassFail.Text = "chart1";
             // 
