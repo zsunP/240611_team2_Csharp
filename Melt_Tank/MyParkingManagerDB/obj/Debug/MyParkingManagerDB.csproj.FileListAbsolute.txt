@@ -1,0 +1,10 @@
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\bin\Debug\MyParkingManagerDB.exe.config
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\bin\Debug\MyParkingManagerDB.exe
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\bin\Debug\MyParkingManagerDB.pdb
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\obj\Debug\MyParkingManagerDB.csproj.AssemblyReference.cache
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\obj\Debug\MyParkingManagerDB.Form1.resources
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\obj\Debug\MyParkingManagerDB.Properties.Resources.resources
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\obj\Debug\MyParkingManagerDB.csproj.GenerateResource.cache
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\obj\Debug\MyParkingManagerDB.csproj.CoreCompileInputs.cache
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\obj\Debug\MyParkingManagerDB.exe
+C:\Users\KB\Documents\C#\MyParkingManagerDB\MyParkingManagerDB\obj\Debug\MyParkingManagerDB.pdb
