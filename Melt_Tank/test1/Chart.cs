@@ -42,21 +42,35 @@ namespace test1
             }
 
             // OK와 NG의 평균 온도에 따른 퍼센트 계산
-            double okPercent = Math.Round((okAvgTemp / (okAvgTemp + ngAvgTemp)) * 100, 2);
-            double ngPercent = Math.Round((ngAvgTemp / (okAvgTemp + ngAvgTemp)) * 100, 2);
+            double ngPercent = Math.Round(((double)ngRecords.Count() / totalCount) * 100, 2);
+            double okPercent = Math.Round(((double)okRecords.Count() / totalCount) * 100, 2);
 
-           
-
-            // 차트 데이터 설정
+            // 차트 초기화
             chart_OKNG.Series.Clear();
             Series series = chart_OKNG.Series.Add("MELT_TEMP");
             series.ChartType = SeriesChartType.Pie;
-            series.Points.AddXY($"OK{okPercent}%", okPercent);
-            series.Points.AddXY($"NG{ngPercent}%", ngPercent);
+
+            // OK 데이터 추가 (파란색)
+            DataPoint okPoint = series.Points.Add(okPercent);
+            okPoint.Color = Color.Blue;
+            okPoint.LegendText = $"OK {okPercent}%";
+
+            // NG 데이터 추가 (빨간색)
+            DataPoint ngPoint = series.Points.Add(ngPercent);
+            ngPoint.Color = Color.Red;
+            ngPoint.LegendText = $"NG {ngPercent}%";
 
             // 차트 타이틀 설정
             chart_OKNG.Titles.Clear();
-            chart_OKNG.Titles.Add($"기간에 따른 양품과 불량품 비율");
+            chart_OKNG.Titles.Add("기간에 따른 양품과 불량품 비율");
+
+            // 범례 설정
+            chart_OKNG.Legends.Clear();
+            chart_OKNG.Legends.Add(new Legend("Legend"));
+            chart_OKNG.Series["MELT_TEMP"].Legend = "Legend";
+
+            // 차트 보여주기
+            chart_OKNG.Visible = true;
         }
 
         public void UpdatePassFailbyDayChart(List<Data> filteredRecords)
@@ -106,6 +120,10 @@ namespace test1
                 seriesNG.Points.AddXY(dateCount.Key.ToShortDateString(), dateCount.Value.Item2);
             }
 
+            // OK는 파랑, NG는 빨강으로 설정
+            seriesOK.Color = Color.Blue;
+            seriesNG.Color = Color.Red;
+
             Chart_PassFail.Series.Add(seriesOK);
             Chart_PassFail.Series.Add(seriesNG);
 
@@ -119,6 +137,7 @@ namespace test1
             // 차트 보여주기
             Chart_PassFail.Visible = true;
         }
+
         public void UpdateMotorSpeedChart(List<Data> filteredRecords)
         {
             if (filteredRecords == null || filteredRecords.Count == 0)
@@ -131,6 +150,14 @@ namespace test1
             List<Data> ngData = filteredRecords.Where(record => record.TAG == "NG").ToList();
             List<Data> okData = filteredRecords.Where(record => record.TAG == "OK").ToList();
 
+            // NUM을 기준으로 데이터 정렬
+            ngData = ngData.OrderBy(record => record.NUM).ToList();
+            okData = okData.OrderBy(record => record.NUM).ToList();
+
+            // NUM 값 별로 평균값 구하기
+            List<Data> ngAveragedData = AverageDataByNUM(ngData);
+            List<Data> okAveragedData = AverageDataByNUM(okData);
+
             // 산점도 초기화
             chart_Mspeed.Series.Clear();
             chart_Mspeed.ChartAreas.Clear();
@@ -142,20 +169,20 @@ namespace test1
 
             seriesNG.ChartType = SeriesChartType.Point;
             seriesOK.ChartType = SeriesChartType.Point;
- 
 
-            // NG 데이터 추가
-            foreach (var record in ngData)
+            // NG 데이터 추가 (평균값 기준)
+            foreach (var record in ngAveragedData)
             {
-                seriesNG.Points.AddXY(record.STD_DT.ToShortDateString(), record.MOTORSPEED);
+                seriesNG.Points.AddXY(record.NUM, record.MOTORSPEED);
             }
 
-            // OK 데이터 추가
-            foreach (var record in okData)
+            // OK 데이터 추가 (평균값 기준)
+            foreach (var record in okAveragedData)
             {
-                seriesOK.Points.AddXY(record.STD_DT.ToShortDateString(), record.MOTORSPEED);
+                seriesOK.Points.AddXY(record.NUM, record.MOTORSPEED);
             }
-            //색깔지정
+
+            // 색깔 지정
             seriesOK.Color = Color.Blue;
             seriesNG.Color = Color.Red;
 
@@ -164,20 +191,39 @@ namespace test1
             chart_Mspeed.Series.Add(seriesOK);
 
             // 축 설정
-            chart_Mspeed.ChartAreas[0].AxisX.Interval = 1;
+            chart_Mspeed.ChartAreas[0].AxisX.Interval = 1; // NUM이 정수형이므로 1 간격 설정
             chart_Mspeed.ChartAreas[0].AxisX.LabelStyle.Angle = -45; // X축 라벨 각도 설정
-            chart_Mspeed.ChartAreas[0].AxisY.Title = "Motor Speed";
-            
+            chart_Mspeed.ChartAreas[0].AxisX.Title = "NUM"; // X 축 제목 설정
+            chart_Mspeed.ChartAreas[0].AxisY.Title = "Motor Speed"; // Y 축 제목 설정
 
             // 제목 설정
             chart_Mspeed.Titles.Clear();
-            chart_Mspeed.Titles.Add("날짜 별 모터스피드 (NG vs OK)");
+            chart_Mspeed.Titles.Add("NUM 별 모터스피드 평균 (NG vs OK)");
 
             // 차트 보여주기
             chart_Mspeed.Visible = true;
         }
 
-        //온도 출력-------------------------
+        // NUM 값을 기준으로 데이터를 평균 내어 반환하는 메서드
+        private List<Data> AverageDataByNUM(List<Data> dataList)
+        {
+            var averagedData = new List<Data>();
+            var groupedData = dataList.GroupBy(record => record.NUM);
+
+            foreach (var group in groupedData)
+            {
+                double averageSpeed = group.Average(record => record.MOTORSPEED);
+                // 여기에서 각 NUM 그룹의 최신 데이터를 사용하도록 수정할 수 있습니다.
+                Data averagedRecord = new Data { NUM = group.Key, MOTORSPEED = averageSpeed };
+                averagedData.Add(averagedRecord);
+            }
+
+            return averagedData;
+        }
+
+
+
+
         public void UpdateMeltTempChart(List<Data> filteredRecords)
         {
             if (filteredRecords == null || filteredRecords.Count == 0)
@@ -186,30 +232,30 @@ namespace test1
                 return;
             }
 
-            // STD_DT 날짜 별 OK와 NG의 온도를 저장할 Dictionary
-            Dictionary<DateTime, List<double>> tempOKByDate = new Dictionary<DateTime, List<double>>();
-            Dictionary<DateTime, List<double>> tempNGByDate = new Dictionary<DateTime, List<double>>();
+            // NUM을 기준으로 OK와 NG 데이터 저장할 Dictionary
+            Dictionary<int, List<double>> tempOKByNum = new Dictionary<int, List<double>>();
+            Dictionary<int, List<double>> tempNGByNum = new Dictionary<int, List<double>>();
 
-            // 데이터를 날짜 별로 구분하여 온도 데이터 추가
+            // 데이터를 NUM 별로 구분하여 온도 데이터 추가
             foreach (var record in filteredRecords)
             {
-                DateTime stdDt = record.STD_DT.Date; // 날짜만 사용하기 위해 시간 부분 제거
+                int num = record.NUM;
 
                 if (record.TAG == "OK")
                 {
-                    if (!tempOKByDate.ContainsKey(stdDt))
+                    if (!tempOKByNum.ContainsKey(num))
                     {
-                        tempOKByDate[stdDt] = new List<double>();
+                        tempOKByNum[num] = new List<double>();
                     }
-                    tempOKByDate[stdDt].Add(record.MELT_TEMP);
+                    tempOKByNum[num].Add(record.MELT_TEMP);
                 }
                 else if (record.TAG == "NG")
                 {
-                    if (!tempNGByDate.ContainsKey(stdDt))
+                    if (!tempNGByNum.ContainsKey(num))
                     {
-                        tempNGByDate[stdDt] = new List<double>();
+                        tempNGByNum[num] = new List<double>();
                     }
-                    tempNGByDate[stdDt].Add(record.MELT_TEMP);
+                    tempNGByNum[num].Add(record.MELT_TEMP);
                 }
             }
 
@@ -226,20 +272,26 @@ namespace test1
             seriesOK.ChartType = SeriesChartType.FastPoint; // 양품은 산점도로 표시
             seriesNG.ChartType = SeriesChartType.FastPoint; // 불량은 산점도로 표시
 
-            // 날짜별로 시리즈에 데이터 추가
-            foreach (var date in tempOKByDate.Keys)
+            // 모든 NUM에 대해 데이터를 시리즈에 추가
+            foreach (var num in tempOKByNum.Keys)
             {
-                foreach (var temp in tempOKByDate[date])
+                if (tempOKByNum.ContainsKey(num))
                 {
-                    seriesOK.Points.AddXY(date.ToShortDateString(), temp);
+                    foreach (var temp in tempOKByNum[num])
+                    {
+                        seriesOK.Points.AddXY(num, temp);
+                    }
                 }
             }
 
-            foreach (var date in tempNGByDate.Keys)
+            foreach (var num in tempNGByNum.Keys)
             {
-                foreach (var temp in tempNGByDate[date])
+                if (tempNGByNum.ContainsKey(num))
                 {
-                    seriesNG.Points.AddXY(date.ToShortDateString(), temp);
+                    foreach (var temp in tempNGByNum[num])
+                    {
+                        seriesNG.Points.AddXY(num, temp);
+                    }
                 }
             }
 
@@ -251,17 +303,14 @@ namespace test1
             chart_Temp.Series.Add(seriesNG);
 
             // 축 설정
-            chart_Temp.ChartAreas[0].AxisX.Interval = 1;
-            chart_Temp.ChartAreas[0].AxisX.LabelStyle.Angle = -45; // X축 라벨 각도 설정
-            chart_Temp.ChartAreas[0].AxisY.Minimum = 0; // Y축 최소값 설정
-            chart_Temp.ChartAreas[0].AxisY.Maximum = 800; // Y축 최대값 설정
-
-            // X 축 제목 설정
-            chart_Temp.ChartAreas[0].AxisX.Title = "날짜";
+            chart_Temp.ChartAreas[0].AxisX.Interval = 1; // NUM이 정수형이므로 1 간격 설정
+            chart_Temp.ChartAreas[0].AxisX.Title = "날짜순"; // X 축 제목 설정
+            chart_Temp.ChartAreas[0].AxisY.Minimum = 0; // Y 축 최소값 설정
+            chart_Temp.ChartAreas[0].AxisY.Maximum = 800; // Y 축 최대값 설정
 
             // 제목 설정
             chart_Temp.Titles.Clear();
-            chart_Temp.Titles.Add("날짜 별 양품과 불량의 온도 산점도 비교");
+            chart_Temp.Titles.Add("NUM 별 양품과 불량의 온도 산점도 비교");
 
             // 범례 설정
             chart_Temp.Legends.Clear();
@@ -272,6 +321,11 @@ namespace test1
             // 차트 보여주기
             chart_Temp.Visible = true;
         }
+
+
+
+
+
 
 
         //수분량출력
@@ -417,6 +471,33 @@ namespace test1
                 return;
             }
 
+            // NUM을 기준으로 OK와 NG 데이터 저장할 Dictionary
+            Dictionary<int, List<double>> weightOKByNum = new Dictionary<int, List<double>>();
+            Dictionary<int, List<double>> weightNGByNum = new Dictionary<int, List<double>>();
+
+            // 데이터를 NUM 별로 구분하여 중량 데이터 추가
+            foreach (var record in filteredRecords)
+            {
+                int num = record.NUM;
+
+                if (record.TAG == "OK")
+                {
+                    if (!weightOKByNum.ContainsKey(num))
+                    {
+                        weightOKByNum[num] = new List<double>();
+                    }
+                    weightOKByNum[num].Add(record.MELT_WEIGHT);
+                }
+                else if (record.TAG == "NG")
+                {
+                    if (!weightNGByNum.ContainsKey(num))
+                    {
+                        weightNGByNum[num] = new List<double>();
+                    }
+                    weightNGByNum[num].Add(record.MELT_WEIGHT);
+                }
+            }
+
             // 차트 초기화
             chart_Mweight.Series.Clear();
             chart_Mweight.ChartAreas.Clear();
@@ -424,45 +505,61 @@ namespace test1
             chart_Mweight.ChartAreas.Add(chartArea);
 
             // 시리즈 생성 및 설정
-            Series seriesOK = new Series("양품(OK)");
-            Series seriesNG = new Series("불량(NG)");
+            Series seriesOK = new Series("양품(OK) 중량 분포");
+            Series seriesNG = new Series("불량(NG) 중량 분포");
 
-            seriesOK.ChartType = SeriesChartType.Point; // 산점도로 설정
-            seriesNG.ChartType = SeriesChartType.Point; // 산점도로 설정
+            seriesOK.ChartType = SeriesChartType.FastPoint; // 양품은 산점도로 표시
+            seriesNG.ChartType = SeriesChartType.FastPoint; // 불량은 산점도로 표시
 
-            // OK 데이터 추가 (파란색)
-            foreach (var record in filteredRecords.Where(record => record.TAG == "OK"))
+            // 모든 NUM에 대해 데이터를 시리즈에 추가
+            foreach (var num in weightOKByNum.Keys)
             {
-                seriesOK.Points.AddXY(record.STD_DT.ToShortDateString(), record.MELT_WEIGHT);
+                if (weightOKByNum.ContainsKey(num))
+                {
+                    foreach (var weight in weightOKByNum[num])
+                    {
+                        seriesOK.Points.AddXY(num, weight);
+                    }
+                }
             }
 
-            // NG 데이터 추가 (빨간색)
-            foreach (var record in filteredRecords.Where(record => record.TAG == "NG"))
+            foreach (var num in weightNGByNum.Keys)
             {
-                seriesNG.Points.AddXY(record.STD_DT.ToShortDateString(), record.MELT_WEIGHT);
+                if (weightNGByNum.ContainsKey(num))
+                {
+                    foreach (var weight in weightNGByNum[num])
+                    {
+                        seriesNG.Points.AddXY(num, weight);
+                    }
+                }
             }
 
-            seriesOK.Color = Color.Blue;
-            seriesNG.Color = Color.Red;
+            // 불량(NG) 시리즈의 마커 색상을 빨간색으로 설정
+            seriesNG.MarkerColor = Color.Red;
 
             // 시리즈 추가
             chart_Mweight.Series.Add(seriesOK);
             chart_Mweight.Series.Add(seriesNG);
 
             // 축 설정
-            chart_Mweight.ChartAreas[0].AxisX.Interval = 1;
-            chart_Mweight.ChartAreas[0].AxisX.LabelStyle.Angle = -45; // X축 라벨 각도 설정
-            chart_Mweight.ChartAreas[0].AxisX.Title = "날짜"; // X축 제목 설정
-            chart_Mweight.ChartAreas[0].AxisY.Title = "내용 중량"; // Y축 제목 설정
+            chart_Mweight.ChartAreas[0].AxisX.Interval = 1; // NUM이 정수형이므로 1 간격 설정
+            chart_Mweight.ChartAreas[0].AxisX.Title = "NUM"; // X 축 제목 설정
+            chart_Mweight.ChartAreas[0].AxisY.Title = "내용 중량"; // Y 축 제목 설정
 
             // 제목 설정
             chart_Mweight.Titles.Clear();
-            chart_Mweight.Titles.Add("날짜 별 내용 중량 (OK vs NG)");
+            chart_Mweight.Titles.Add("NUM 별 양품과 불량의 중량 산점도 비교");
+
+            // 범례 설정
+            chart_Mweight.Legends.Clear();
+            chart_Mweight.Legends.Add(new Legend("Legend"));
+            chart_Mweight.Series["양품(OK) 중량 분포"].Legend = "Legend";
+            chart_Mweight.Series["불량(NG) 중량 분포"].Legend = "Legend";
 
             // 차트 보여주기
             chart_Mweight.Visible = true;
         }
 
-
+     
     }
 }

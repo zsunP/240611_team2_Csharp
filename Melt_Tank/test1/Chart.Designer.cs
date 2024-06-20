@@ -266,13 +266,13 @@
             this.chart_Mweight.ChartAreas.Add(chartArea5);
             legend5.Name = "Legend1";
             this.chart_Mweight.Legends.Add(legend5);
-            this.chart_Mweight.Location = new System.Drawing.Point(583, 520);
+            this.chart_Mweight.Location = new System.Drawing.Point(566, 491);
             this.chart_Mweight.Name = "chart_Mweight";
             series5.ChartArea = "ChartArea1";
             series5.Legend = "Legend1";
             series5.Name = "Series1";
             this.chart_Mweight.Series.Add(series5);
-            this.chart_Mweight.Size = new System.Drawing.Size(555, 465);
+            this.chart_Mweight.Size = new System.Drawing.Size(633, 534);
             this.chart_Mweight.TabIndex = 5;
             this.chart_Mweight.Text = "chart3";
             // 
@@ -282,7 +282,7 @@
             this.chart_Insp.ChartAreas.Add(chartArea6);
             legend6.Name = "Legend1";
             this.chart_Insp.Legends.Add(legend6);
-            this.chart_Insp.Location = new System.Drawing.Point(1202, 538);
+            this.chart_Insp.Location = new System.Drawing.Point(1218, 507);
             this.chart_Insp.Name = "chart_Insp";
             series6.ChartArea = "ChartArea1";
             series6.Legend = "Legend1";
